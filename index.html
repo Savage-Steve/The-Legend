@@ -78,6 +78,40 @@ body{
   opacity: 1;
   pointer-events: auto;
 }
+html,
+body {
+  overflow: hidden;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50px;
+  right: -500px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  opacity: 0%;
+  transition: all 0.25s ease-out;
+}
+
+
+.toast-active {
+  right: 80px;
+  opacity: 100%;
+}
+
+.close-button {
+  background: #fff;
+  border: none;
+  cursor: pointer;
+}
+.close-button:hover {
+  background: #f2f2f2;
+  border: none;
+  cursor: pointer;
+}
 	</style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Iconscout Link For Icons -->
@@ -118,7 +152,7 @@ body{
           </li>
           <li class="item" onclick="copylink()">
             <i class="uil uil-link-alt"></i>
-            <span>Get Link</span>
+            <span>Copy Link</span>
           </li>
           <li class="item">
             <i class="uil uil-edit"></i>
@@ -137,8 +171,19 @@ body{
         </div>
       </div>
     </div>
-
+    <div class="toast" id="toast">
+      <i class="uil uil-clipboard-alt"></i>
+      &nbsp;
+      <p>Url Copied To Clipboard</p>
+      &nbsp;
+      <button id="close-button" class="close-button">
+        <b>
+          &#10005;
+        </b>
+      </button>
+    </div>
     <script>
+        let toast = document.getElementById("toast");
 		const contextMenu = document.querySelector(".wrapper"),
 shareMenu = contextMenu.querySelector(".share-menu");
 
@@ -168,7 +213,11 @@ window.addEventListener("contextmenu", e => {
 document.addEventListener("click", () => contextMenu.style.visibility = "hidden");
 function copylink(){
 	window.navigator.clipboard.writeText("https://savage-steve.github.io/The-Legend/")
+  toast.classList.add("toast-active");
 }
+document.getElementById("close-button").addEventListener("click", function () {
+  toast.classList.remove("toast-active");
+});
 	</script>
   </body>
 </html>
